@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #surat-preview, #surat-preview * {
+    visibility: visible;
+  }
+  #surat-preview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 1.5cm; /* Memberi margin pada kertas cetak */
+    font-size: 12pt;
+    color: black;
+  }
+  /* Sembunyikan tombol cetak saat mencetak */
+  .no-print {
+    display: none;
+  }
+}
