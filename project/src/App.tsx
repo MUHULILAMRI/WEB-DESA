@@ -8,6 +8,7 @@ import News from './pages/News';
 import Services from './pages/Services';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import Surat from './pages/Surat';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/layanan" element={<Services />} />
           <Route path="/galeri" element={<Gallery />} />
           <Route path="/kontak" element={<Contact />} />
+          <Route path="/surat" element={<Surat />} />
         </Routes>
         <Footer />
       </div>

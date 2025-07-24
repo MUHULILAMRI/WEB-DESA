@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name && formData.email && formData.message) {
+      setFormStatus('Pesan Anda telah berhasil dikirim! Terima kasih.');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setFormStatus(''), 5000);
+    } else {
+      setFormStatus('Harap isi semua kolom sebelum mengirim.');
+    }
+  };
+
   return (
     <div className="pt-20 bg-gray-900">
       <div className="container mx-auto px-6 py-16">
@@ -30,40 +53,52 @@ function Contact() {
           
           <div className="bg-gray-800 p-8 rounded-xl">
             <h2 className="text-2xl font-semibold text-white mb-6">Kirim Pesan</h2>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-white mb-2">Nama</label>
+                <label htmlFor="name" className="block text-white mb-2">Nama</label>
                 <input 
+                  id="name"
                   type="text" 
                   className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-green-400"
                   placeholder="Masukkan nama anda"
+                  value={formData.name}
+                  onChange={handleChange}
                 />
               </div>
               
               <div>
-                <label className="block text-white mb-2">Email</label>
+                <label htmlFor="email" className="block text-white mb-2">Email</label>
                 <input 
+                  id="email"
                   type="email" 
                   className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-green-400"
                   placeholder="Masukkan email anda"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
               
               <div>
-                <label className="block text-white mb-2">Pesan</label>
+                <label htmlFor="message" className="block text-white mb-2">Pesan</label>
                 <textarea 
+                  id="message"
                   className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-green-400 h-32"
                   placeholder="Tulis pesan anda"
+                  value={formData.message}
+                  onChange={handleChange}
                 ></textarea>
               </div>
               
               <button 
                 type="submit" 
-                className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg w-full"
+                className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg w-full transition-colors"
               >
                 Kirim Pesan
               </button>
             </form>
+            {formStatus && (
+              <p className="mt-4 text-center text-green-400">{formStatus}</p>
+            )}
           </div>
         </div>
       </div>
